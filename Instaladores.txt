@@ -2,3 +2,6 @@ Sql Server 2014 https://www.microsoft.com/en-us/download/details.aspx?id=42299
 Microsoft SQL Server Data Tools  https://www.microsoft.com/en-us/download/details.aspx?id=42313
 Postgresql https://www.postgresql.org/download/
 Datacleaner https://datacleaner.org/
+R (https://cran.r-project.org/)
+R Studio (https://www.rstudio.com/products/rstudio/download3/)
+MiKTex (http://miktex.org/download)
