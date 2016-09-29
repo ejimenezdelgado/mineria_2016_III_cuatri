@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="LocalHost.Mineria_UTN_SA"
+  DTS:DTSID="{58675475-DCEA-4CD7-8CE4-9E2C053353FE}"
+  DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectionString="Data Source=.;Initial Catalog=Mineria_UTN_SA;Integrated Security=True;Application Name=SSIS-Clase4-{58675475-DCEA-4CD7-8CE4-9E2C053353FE}LocalHost.Mineria_UTN_SA;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>
