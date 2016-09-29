@@ -7,3 +7,11 @@ QlikView
 BIRT Susana- Alejandra Grupo 6
 SAP Johan - Elias Grupo 7
 Talend Campbell - Esteban Grupo 8
+
+-Calificación
+   -Que es
+   -Que hace
+   -Caracteristicas
+   -Demo
+   -3 Conclusiones y 3 Recomendaciones
+   -Bibliografia 
