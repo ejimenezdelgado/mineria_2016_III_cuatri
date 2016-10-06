@@ -2,13 +2,18 @@
 <BuildLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ProjectInfo>
     <Name>MineriaUTN</Name>
-    <LastWriteTime>2016-10-05T21:28:19.320591Z</LastWriteTime>
+    <LastWriteTime>2016-10-06T00:48:48.5165481Z</LastWriteTime>
     <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
   </ProjectInfo>
   <LastBuildInfos>
     <ProjectBuildItemInfo>
-      <Name>Package.dtsx</Name>
-      <LastWriteTime>2016-10-05T21:36:46.222402Z</LastWriteTime>
+      <Name>SSIS SA.dtsx</Name>
+      <LastWriteTime>2016-10-06T00:48:48.4394737Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>SSIS DW.dtsx</Name>
+      <LastWriteTime>2016-10-06T00:52:03.7681808Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
   </LastBuildInfos>
