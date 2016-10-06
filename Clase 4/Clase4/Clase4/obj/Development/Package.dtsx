@@ -11,8 +11,8 @@
   DTS:LocaleID="3082"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="5"
-  DTS:VersionGUID="{B12F12B4-EC7D-497B-82C3-DE02CF996552}">
+  DTS:VersionBuild="7"
+  DTS:VersionGUID="{089F9BC8-B948-4716-90D0-8A12F30CC25C}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:Variables />
@@ -3124,7 +3124,7 @@
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Sequence Container\Articulo\ADO NET Source">
+    design-time-name="Package\Sequence Container\Articulo\ADO NET Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -3132,7 +3132,7 @@
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Sequence Container\Articulo\ADO NET Destination">
+    design-time-name="Package\Sequence Container\Articulo\ADO NET Source">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -3178,7 +3178,7 @@
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Sequence Container\Bodega\ADO NET Source">
+    design-time-name="Package\Sequence Container\Bodega\ADO NET Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -3186,7 +3186,7 @@
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Sequence Container\Bodega\ADO NET Destination">
+    design-time-name="Package\Sequence Container\Bodega\ADO NET Source">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>

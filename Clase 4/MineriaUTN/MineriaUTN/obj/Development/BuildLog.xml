@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <BuildLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ProjectInfo>
-    <Name>Clase4</Name>
-    <LastWriteTime>2016-09-29T03:00:32.6306534Z</LastWriteTime>
+    <Name>MineriaUTN</Name>
+    <LastWriteTime>2016-10-05T21:28:19.320591Z</LastWriteTime>
     <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
   </ProjectInfo>
   <LastBuildInfos>
     <ProjectBuildItemInfo>
       <Name>Package.dtsx</Name>
-      <LastWriteTime>2016-09-29T20:19:19.3402531Z</LastWriteTime>
+      <LastWriteTime>2016-10-05T21:36:46.222402Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
   </LastBuildInfos>
