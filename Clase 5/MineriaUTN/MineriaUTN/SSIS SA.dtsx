@@ -11,8 +11,8 @@
   DTS:LocaleID="3082"
   DTS:ObjectName="SSIS SA"
   DTS:PackageType="5"
-  DTS:VersionBuild="10"
-  DTS:VersionGUID="{391B2E6E-02F8-48E3-A1B6-0B890D9F1909}">
+  DTS:VersionBuild="14"
+  DTS:VersionGUID="{57173637-14A3-49DC-9F47-0625CD96CEC0}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -11769,7 +11769,7 @@ WHERE [Detalle_Fecha] &gt; @UltimaCarga;</property>
                         <property
                           dataType="System.String"
                           description="Specifies the name of the database object used to open a rowset."
-                          name="OpenRowset">[dbo].[Factura_Encabezado]</property>
+                          name="OpenRowset">[dbo].[TD_Factura_Encabezado]</property>
                         <property
                           dataType="System.String"
                           description="Specifies the variable that contains the name of the database object used to open a rowset."
@@ -11812,8 +11812,8 @@ WHERE [Detalle_Fecha] &gt; @UltimaCarga;</property>
                       <connections>
                         <connection
                           refId="Package\Carga\Factura\Factura Encabezado\Insert FacturaEnc1.Connections[OleDbConnection]"
-                          connectionManagerID="Package.ConnectionManagers[LocalHost.Mineria_UTN]"
-                          connectionManagerRefId="Package.ConnectionManagers[LocalHost.Mineria_UTN]"
+                          connectionManagerID="Package.ConnectionManagers[LocalHost.Mineria_UTN_SA]"
+                          connectionManagerRefId="Package.ConnectionManagers[LocalHost.Mineria_UTN_SA]"
                           description="The OLE DB runtime connection used to access the database."
                           name="OleDbConnection" />
                       </connections>
@@ -12705,13 +12705,10 @@ SET @UltimaCarga = '1900-01-01';
 
 SELECT
 @UltimaCarga = (FechaInicioCarga - CantidadDias)
-FROM [PROYECTOBD_SA].dbo.LDBI_Table_Configuracion
+FROM [Mineria_UTN_SA].dbo.Configuracion
 WHERE FechaInicioCarga=(SELECT MAX(FechaInicioCarga) FROM [Mineria_UTN_SA].dbo.Configuracion WHERE Estado = 'E');
 
-IF 1 = 2 PRINT 'Boolean_expression is true.'
-ELSE PRINT 'Boolean_expression is false.' ;
-
-SELECT [Consecutivo]
+SELECT  TOP 100  [Consecutivo]
       ,[Emp_Id]
       ,[TipoDoc_id]
       ,[Suc_Id]
@@ -18768,10 +18765,6 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
       <GraphLayout
         Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="151,42"
-          Id="Package\Carga\Limpieza de SA"
-          TopLeft="804.833333333333,25.4999999999998" />
-        <NodeLayout
           Size="119,42"
           Id="Package\Carga\Articulo\Articulos"
           TopLeft="20,12.5" />
@@ -19183,6 +19176,47 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
           Id="Package\Carga\Articulo"
           TopLeft="5.50000000000006,110" />
         <NodeLayout
+          Size="150,42"
+          Id="Package\Carga\Factura\Factura Detalle"
+          TopLeft="13.9166666666663,88.7976190476194" />
+        <NodeLayout
+          Size="173,42"
+          Id="Package\Carga\Factura\Factura Encabezado"
+          TopLeft="5.5,5.5" />
+        <EdgeLayout
+          Id="Package\Carga\Factura.PrecedenceConstraints[Constraint 16]"
+          TopLeft="90.4583333333331,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,41.2976190476194"
+              Start="0,0"
+              End="0,33.7976190476194">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.7976190476194" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="184,136"
+          Size="184,179"
+          Id="Package\Carga\Factura"
+          TopLeft="1230.08333333333,20.3333333333342" />
+        <NodeLayout
+          Size="151,42"
+          Id="Package\Carga\Limpieza de SA"
+          TopLeft="804.833333333333,25.4999999999998" />
+        <NodeLayout
           Size="184,42"
           Id="Package\Carga\Proveedor\Articulo por Proveedor"
           TopLeft="212.166666666667,141.166666666667" />
@@ -19375,43 +19409,6 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
           Size="466,233"
           Id="Package\Carga\Proveedor"
           TopLeft="762.166666666667,211.833333333333" />
-        <NodeLayout
-          Size="150,42"
-          Id="Package\Carga\Factura\Factura Detalle"
-          TopLeft="13.9166666666663,88.7976190476194" />
-        <NodeLayout
-          Size="173,42"
-          Id="Package\Carga\Factura\Factura Encabezado"
-          TopLeft="5.5,5.5" />
-        <EdgeLayout
-          Id="Package\Carga\Factura.PrecedenceConstraints[Constraint 16]"
-          TopLeft="90.4583333333331,47.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,41.2976190476194"
-              Start="0,0"
-              End="0,33.7976190476194">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,33.7976190476194" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <ContainerLayout
-          HeaderHeight="43"
-          IsExpanded="True"
-          PanelSize="184,136"
-          Size="184,179"
-          Id="Package\Carga\Factura"
-          TopLeft="1230.08333333333,20.3333333333342" />
         <EdgeLayout
           Id="Package\Carga.PrecedenceConstraints[Constraint]"
           TopLeft="856.5,67.4999999999998">
@@ -19535,9 +19532,9 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="18.7619047619065,66.8809523809516"
+              EndConnector="18.761904761907,66.8809523809517"
               Start="0,0"
-              End="18.7619047619065,59.3809523809516">
+              End="18.761904761907,59.3809523809517">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
@@ -19548,13 +19545,13 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
                     Point2="0,33.4404761904758"
                     Point3="4,33.4404761904758" />
                   <mssgle:LineSegment
-                    End="14.7619047619065,33.4404761904758" />
+                    End="14.761904761907,33.4404761904758" />
                   <mssgle:CubicBezierSegment
-                    Point1="14.7619047619065,33.4404761904758"
-                    Point2="18.7619047619065,33.4404761904758"
-                    Point3="18.7619047619065,37.4404761904758" />
+                    Point1="14.761904761907,33.4404761904758"
+                    Point2="18.761904761907,33.4404761904758"
+                    Point3="18.761904761907,37.4404761904758" />
                   <mssgle:LineSegment
-                    End="18.7619047619065,59.3809523809516" />
+                    End="18.761904761907,59.3809523809517" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -19569,14 +19566,14 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,98.1428571428576"
+              EndConnector="0,98.1428571428569"
               Start="0,0"
-              End="0,90.6428571428576">
+              End="0,90.6428571428569">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,90.6428571428576" />
+                    End="0,90.6428571428569" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -19592,15 +19589,15 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
     design-time-name="Package\Carga\Articulo\Articulos">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="150,42"
-          Id="Package\Carga\Articulo\Articulos\Insert Articulos"
-          TopLeft="430,137" />
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="165,42"
           Id="Package\Carga\Articulo\Articulos\Select de articulos"
           TopLeft="387,47" />
+        <NodeLayout
+          Size="150,42"
+          Id="Package\Carga\Articulo\Articulos\Insert Articulos"
+          TopLeft="430,137" />
         <EdgeLayout
           Id="Package\Carga\Articulo\Articulos.Paths[OLE DB Source Output]"
           TopLeft="469.5,89">
@@ -19632,7 +19629,9 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -19668,15 +19667,15 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
     design-time-name="Package\Carga\Articulo\Bodega">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="145,42"
-          Id="Package\Carga\Articulo\Bodega\Insert Bodega"
-          TopLeft="244,117" />
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="146,42"
           Id="Package\Carga\Articulo\Bodega\Select Bodega"
           TopLeft="252,35" />
+        <NodeLayout
+          Size="145,42"
+          Id="Package\Carga\Articulo\Bodega\Insert Bodega"
+          TopLeft="244,117" />
         <EdgeLayout
           Id="Package\Carga\Articulo\Bodega.Paths[OLE DB Source Output]"
           TopLeft="325,77">
@@ -19708,7 +19707,9 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -19744,15 +19745,15 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
     design-time-name="Package\Carga\Articulo\Caja">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="131,42"
-          Id="Package\Carga\Articulo\Caja\Insert Caja"
-          TopLeft="249,184" />
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="131,42"
           Id="Package\Carga\Articulo\Caja\Select Caja"
           TopLeft="206,87" />
+        <NodeLayout
+          Size="131,42"
+          Id="Package\Carga\Articulo\Caja\Insert Caja"
+          TopLeft="249,184" />
         <EdgeLayout
           Id="Package\Carga\Articulo\Caja.Paths[OLE DB Source Output]"
           TopLeft="271.5,129">
@@ -19784,7 +19785,9 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -19820,15 +19823,15 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
     design-time-name="Package\Carga\Articulo\Casa">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="132,42"
-          Id="Package\Carga\Articulo\Casa\Insert Casa"
-          TopLeft="158,133" />
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="133,42"
           Id="Package\Carga\Articulo\Casa\Select Casa"
           TopLeft="152,57" />
+        <NodeLayout
+          Size="132,42"
+          Id="Package\Carga\Articulo\Casa\Insert Casa"
+          TopLeft="158,133" />
         <EdgeLayout
           Id="Package\Carga\Articulo\Casa.Paths[OLE DB Source Output]"
           TopLeft="221.25,99">
@@ -19848,7 +19851,9 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -19884,15 +19889,15 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
     design-time-name="Package\Carga\Articulo\Categoria Articulo">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="193,42"
-          Id="Package\Carga\Articulo\Categoria Articulo\Insert Categoria Articulo"
-          TopLeft="160,118" />
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="194,42"
           Id="Package\Carga\Articulo\Categoria Articulo\Select Categoria Articulo"
           TopLeft="152,57" />
+        <NodeLayout
+          Size="193,42"
+          Id="Package\Carga\Articulo\Categoria Articulo\Insert Categoria Articulo"
+          TopLeft="160,118" />
         <EdgeLayout
           Id="Package\Carga\Articulo\Categoria Articulo.Paths[OLE DB Source Output]"
           TopLeft="152,78">
@@ -19924,7 +19929,9 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -19960,15 +19967,15 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
     design-time-name="Package\Carga\Articulo\Cliente">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="142,42"
-          Id="Package\Carga\Articulo\Cliente\Insert Cliente"
-          TopLeft="180,114" />
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="146,42"
           Id="Package\Carga\Articulo\Cliente\Select  Cliente"
           TopLeft="176,28" />
+        <NodeLayout
+          Size="142,42"
+          Id="Package\Carga\Articulo\Cliente\Insert Cliente"
+          TopLeft="180,114" />
         <EdgeLayout
           Id="Package\Carga\Articulo\Cliente.Paths[OLE DB Source Output]"
           TopLeft="250,70">
@@ -19988,7 +19995,9 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -20024,15 +20033,15 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
     design-time-name="Package\Carga\Articulo\Departamento">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="177,42"
-          Id="Package\Carga\Articulo\Departamento\Insert Departamento"
-          TopLeft="169,147" />
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="178,42"
           Id="Package\Carga\Articulo\Departamento\Select Departamento"
           TopLeft="161,49" />
+        <NodeLayout
+          Size="177,42"
+          Id="Package\Carga\Articulo\Departamento\Insert Departamento"
+          TopLeft="169,147" />
         <EdgeLayout
           Id="Package\Carga\Articulo\Departamento.Paths[OLE DB Source Output]"
           TopLeft="253.75,91">
@@ -20052,7 +20061,9 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -20088,15 +20099,15 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
     design-time-name="Package\Carga\Articulo\Marca">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="138,42"
-          Id="Package\Carga\Articulo\Marca\Insert Marca"
-          TopLeft="171,154" />
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="139,42"
           Id="Package\Carga\Articulo\Marca\Select Marca"
           TopLeft="174,58" />
+        <NodeLayout
+          Size="138,42"
+          Id="Package\Carga\Articulo\Marca\Insert Marca"
+          TopLeft="171,154" />
         <EdgeLayout
           Id="Package\Carga\Articulo\Marca.Paths[OLE DB Source Output]"
           TopLeft="241.75,100">
@@ -20116,7 +20127,9 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -20152,15 +20165,15 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
     design-time-name="Package\Carga\Articulo\Proveedor">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="158,42"
-          Id="Package\Carga\Articulo\Proveedor\Insert Proveedor"
-          TopLeft="251,107" />
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="158,42"
           Id="Package\Carga\Articulo\Proveedor\Select Proveedor"
           TopLeft="248,30" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\Carga\Articulo\Proveedor\Insert Proveedor"
+          TopLeft="251,107" />
         <EdgeLayout
           Id="Package\Carga\Articulo\Proveedor.Paths[OLE DB Source Output]"
           TopLeft="328.5,72">
@@ -20180,7 +20193,9 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -20216,7 +20231,7 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
     design-time-name="Package\Carga\Articulo\Subcatgoria Articulo">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="210,42"
           Id="Package\Carga\Articulo\Subcatgoria Articulo\Insert Subcategoria Articulo"
@@ -20256,7 +20271,9 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -20292,15 +20309,15 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
     design-time-name="Package\Carga\Articulo\Sucursal">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="149,42"
-          Id="Package\Carga\Articulo\Sucursal\Insert Sucursal"
-          TopLeft="207,155" />
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="150,42"
           Id="Package\Carga\Articulo\Sucursal\Select Sucursal"
           TopLeft="206,62" />
+        <NodeLayout
+          Size="149,42"
+          Id="Package\Carga\Articulo\Sucursal\Insert Sucursal"
+          TopLeft="207,155" />
         <EdgeLayout
           Id="Package\Carga\Articulo\Sucursal.Paths[OLE DB Source Output]"
           TopLeft="281.25,104">
@@ -20320,7 +20337,9 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -20356,7 +20375,7 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
     design-time-name="Package\Carga\Articulo\Tipo Documento">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="188,42"
           Id="Package\Carga\Articulo\Tipo Documento\Insert Tipo Documento"
@@ -20396,7 +20415,9 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -20432,15 +20453,15 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
     design-time-name="Package\Carga\Articulo\Tipo Mov Inventario">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="204,42"
-          Id="Package\Carga\Articulo\Tipo Mov Inventario\Insert Tipo Mov Inventario"
-          TopLeft="206,136" />
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="208,42"
           Id="Package\Carga\Articulo\Tipo Mov Inventario\Select  Tipo Mov Inventario"
           TopLeft="201,56" />
+        <NodeLayout
+          Size="204,42"
+          Id="Package\Carga\Articulo\Tipo Mov Inventario\Insert Tipo Mov Inventario"
+          TopLeft="206,136" />
         <EdgeLayout
           Id="Package\Carga\Articulo\Tipo Mov Inventario.Paths[OLE DB Source Output]"
           TopLeft="306.5,98">
@@ -20460,7 +20481,9 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -20493,590 +20516,18 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
     </Properties>
   </PipelineComponentMetadata>
   <TaskHost
-    design-time-name="Package\Carga\Proveedor\Articulo por Proveedor">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="215,42"
-          Id="Package\Carga\Proveedor\Articulo por Proveedor\Insert Articulo por Proveedor"
-          TopLeft="240,161" />
-        <NodeLayout
-          Size="216,42"
-          Id="Package\Carga\Proveedor\Articulo por Proveedor\Select Articulo por Proveedor"
-          TopLeft="173,52" />
-        <EdgeLayout
-          Id="Package\Carga\Proveedor\Articulo por Proveedor.Paths[OLE DB Source Output]"
-          TopLeft="281,94">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="66.5,67"
-              Start="0,0"
-              End="66.5,59.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,29.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,29.5"
-                    Point2="0,33.5"
-                    Point3="4,33.5" />
-                  <mssgle:LineSegment
-                    End="62.5,33.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="62.5,33.5"
-                    Point2="66.5,33.5"
-                    Point3="66.5,37.5" />
-                  <mssgle:LineSegment
-                    End="66.5,59.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\Carga\Proveedor\Articulo por Proveedor\Insert Articulo por Proveedor">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Carga\Proveedor\Articulo por Proveedor\Select Articulo por Proveedor">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <TaskHost
-    design-time-name="Package\Carga\Proveedor\Cadena">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="145,42"
-          Id="Package\Carga\Proveedor\Cadena\Insert Cadena"
-          TopLeft="182,155" />
-        <NodeLayout
-          Size="145,42"
-          Id="Package\Carga\Proveedor\Cadena\Select Cadena"
-          TopLeft="173,52" />
-        <EdgeLayout
-          Id="Package\Carga\Proveedor\Cadena.Paths[OLE DB Source Output]"
-          TopLeft="245.5,94">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="9,61"
-              Start="0,0"
-              End="9,53.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,26.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,26.5"
-                    Point2="0,30.5"
-                    Point3="4,30.5" />
-                  <mssgle:LineSegment
-                    End="5,30.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="5,30.5"
-                    Point2="9,30.5"
-                    Point3="9,34.5" />
-                  <mssgle:LineSegment
-                    End="9,53.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\Carga\Proveedor\Cadena\Insert Cadena">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Carga\Proveedor\Cadena\Select Cadena">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <TaskHost
-    design-time-name="Package\Carga\Proveedor\Nivel1">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="139,42"
-          Id="Package\Carga\Proveedor\Nivel1\Insert Nivel1"
-          TopLeft="173,174" />
-        <NodeLayout
-          Size="139,42"
-          Id="Package\Carga\Proveedor\Nivel1\Select Nivel1"
-          TopLeft="173,52" />
-        <EdgeLayout
-          Id="Package\Carga\Proveedor\Nivel1.Paths[OLE DB Source Output]"
-          TopLeft="242.5,94">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,80"
-              Start="0,0"
-              End="0,72.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,72.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\Carga\Proveedor\Nivel1\Insert Nivel1">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Carga\Proveedor\Nivel1\Select Nivel1">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <TaskHost
-    design-time-name="Package\Carga\Proveedor\Nivel2">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="139,42"
-          Id="Package\Carga\Proveedor\Nivel2\Insert Nivel2"
-          TopLeft="195,158" />
-        <NodeLayout
-          Size="139,42"
-          Id="Package\Carga\Proveedor\Nivel2\Select Nivel2"
-          TopLeft="173,52" />
-        <EdgeLayout
-          Id="Package\Carga\Proveedor\Nivel2.Paths[OLE DB Source Output]"
-          TopLeft="242.5,94">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="22,64"
-              Start="0,0"
-              End="22,56.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,28" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,28"
-                    Point2="0,32"
-                    Point3="4,32" />
-                  <mssgle:LineSegment
-                    End="18,32" />
-                  <mssgle:CubicBezierSegment
-                    Point1="18,32"
-                    Point2="22,32"
-                    Point3="22,36" />
-                  <mssgle:LineSegment
-                    End="22,56.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\Carga\Proveedor\Nivel2\Insert Nivel2">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Carga\Proveedor\Nivel2\Select Nivel2">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <TaskHost
-    design-time-name="Package\Carga\Proveedor\Nivel3">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="139,42"
-          Id="Package\Carga\Proveedor\Nivel3\Insert Nivel3"
-          TopLeft="195,158" />
-        <NodeLayout
-          Size="139,42"
-          Id="Package\Carga\Proveedor\Nivel3\Select Nivel3"
-          TopLeft="173,52" />
-        <EdgeLayout
-          Id="Package\Carga\Proveedor\Nivel3.Paths[OLE DB Source Output]"
-          TopLeft="242.5,94">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="22,64"
-              Start="0,0"
-              End="22,56.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,28" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,28"
-                    Point2="0,32"
-                    Point3="4,32" />
-                  <mssgle:LineSegment
-                    End="18,32" />
-                  <mssgle:CubicBezierSegment
-                    Point1="18,32"
-                    Point2="22,32"
-                    Point3="22,36" />
-                  <mssgle:LineSegment
-                    End="22,56.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\Carga\Proveedor\Nivel3\Insert Nivel3">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Carga\Proveedor\Nivel3\Select Nivel3">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <TaskHost
-    design-time-name="Package\Carga\Proveedor\Unidad">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="143,42"
-          Id="Package\Carga\Proveedor\Unidad\Insert Unidad"
-          TopLeft="232,168" />
-        <NodeLayout
-          Size="143,42"
-          Id="Package\Carga\Proveedor\Unidad\Select Unidad"
-          TopLeft="231,85" />
-        <EdgeLayout
-          Id="Package\Carga\Proveedor\Unidad.Paths[OLE DB Source Output]"
-          TopLeft="303,127">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,41"
-              Start="0,0"
-              End="0,33.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,33.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\Carga\Proveedor\Unidad\Insert Unidad">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Carga\Proveedor\Unidad\Select Unidad">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <TaskHost
-    design-time-name="Package\Carga\Proveedor\Vendedor">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="155,42"
-          Id="Package\Carga\Proveedor\Vendedor\Insert Vendedor"
-          TopLeft="210,185" />
-        <NodeLayout
-          Size="155,42"
-          Id="Package\Carga\Proveedor\Vendedor\Select Vendedor"
-          TopLeft="173,52" />
-        <EdgeLayout
-          Id="Package\Carga\Proveedor\Vendedor.Paths[OLE DB Source Output]"
-          TopLeft="250.5,94">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="37,91"
-              Start="0,0"
-              End="37,83.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,41.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,41.5"
-                    Point2="0,45.5"
-                    Point3="4,45.5" />
-                  <mssgle:LineSegment
-                    End="33,45.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="33,45.5"
-                    Point2="37,45.5"
-                    Point3="37,49.5" />
-                  <mssgle:LineSegment
-                    End="37,83.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\Carga\Proveedor\Vendedor\Insert Vendedor">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Carga\Proveedor\Vendedor\Select Vendedor">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <TaskHost
-    design-time-name="Package\Carga\Proveedor\Zona">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="133,42"
-          Id="Package\Carga\Proveedor\Zona\Insert Zona"
-          TopLeft="172,174" />
-        <NodeLayout
-          Size="134,42"
-          Id="Package\Carga\Proveedor\Zona\Select Zona"
-          TopLeft="173,52" />
-        <EdgeLayout
-          Id="Package\Carga\Proveedor\Zona.Paths[OLE DB Source Output]"
-          TopLeft="239.25,94">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,80"
-              Start="0,0"
-              End="0,72.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,72.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\Carga\Proveedor\Zona\Insert Zona">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Carga\Proveedor\Zona\Select Zona">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <TaskHost
     design-time-name="Package\Carga\Factura\Factura Detalle">
     <LayoutInfo>
       <GraphLayout
         Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="161,42"
-          Id="Package\Carga\Factura\Factura Detalle\Insert FacturaDet"
-          TopLeft="195,158" />
-        <NodeLayout
           Size="150,42"
           Id="Package\Carga\Factura\Factura Detalle\OLE DB Source"
           TopLeft="257,47" />
+        <NodeLayout
+          Size="161,42"
+          Id="Package\Carga\Factura\Factura Detalle\Insert FacturaDet"
+          TopLeft="195,158" />
         <EdgeLayout
           Id="Package\Carga\Factura\Factura Detalle.Paths[OLE DB Source Output]"
           TopLeft="332,89">
@@ -21205,6 +20656,594 @@ WHERE [Factura_Fecha] &gt; @UltimaCarga;</property>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Carga\Factura\Factura Encabezado\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Carga\Proveedor\Articulo por Proveedor">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="216,42"
+          Id="Package\Carga\Proveedor\Articulo por Proveedor\Select Articulo por Proveedor"
+          TopLeft="173,52" />
+        <NodeLayout
+          Size="215,42"
+          Id="Package\Carga\Proveedor\Articulo por Proveedor\Insert Articulo por Proveedor"
+          TopLeft="240,161" />
+        <EdgeLayout
+          Id="Package\Carga\Proveedor\Articulo por Proveedor.Paths[OLE DB Source Output]"
+          TopLeft="281,94">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="66.5,67"
+              Start="0,0"
+              End="66.5,59.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,29.5"
+                    Point2="0,33.5"
+                    Point3="4,33.5" />
+                  <mssgle:LineSegment
+                    End="62.5,33.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="62.5,33.5"
+                    Point2="66.5,33.5"
+                    Point3="66.5,37.5" />
+                  <mssgle:LineSegment
+                    End="66.5,59.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Carga\Proveedor\Articulo por Proveedor\Insert Articulo por Proveedor">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Carga\Proveedor\Articulo por Proveedor\Select Articulo por Proveedor">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Carga\Proveedor\Cadena">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="145,42"
+          Id="Package\Carga\Proveedor\Cadena\Insert Cadena"
+          TopLeft="182,155" />
+        <NodeLayout
+          Size="145,42"
+          Id="Package\Carga\Proveedor\Cadena\Select Cadena"
+          TopLeft="173,52" />
+        <EdgeLayout
+          Id="Package\Carga\Proveedor\Cadena.Paths[OLE DB Source Output]"
+          TopLeft="245.5,94">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="9,61"
+              Start="0,0"
+              End="9,53.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,26.5"
+                    Point2="0,30.5"
+                    Point3="4,30.5" />
+                  <mssgle:LineSegment
+                    End="5,30.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="5,30.5"
+                    Point2="9,30.5"
+                    Point3="9,34.5" />
+                  <mssgle:LineSegment
+                    End="9,53.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Carga\Proveedor\Cadena\Insert Cadena">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Carga\Proveedor\Cadena\Select Cadena">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Carga\Proveedor\Nivel1">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="139,42"
+          Id="Package\Carga\Proveedor\Nivel1\Select Nivel1"
+          TopLeft="173,52" />
+        <NodeLayout
+          Size="139,42"
+          Id="Package\Carga\Proveedor\Nivel1\Insert Nivel1"
+          TopLeft="173,174" />
+        <EdgeLayout
+          Id="Package\Carga\Proveedor\Nivel1.Paths[OLE DB Source Output]"
+          TopLeft="242.5,94">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,80"
+              Start="0,0"
+              End="0,72.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,72.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Carga\Proveedor\Nivel1\Insert Nivel1">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Carga\Proveedor\Nivel1\Select Nivel1">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Carga\Proveedor\Nivel2">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="139,42"
+          Id="Package\Carga\Proveedor\Nivel2\Insert Nivel2"
+          TopLeft="195,158" />
+        <NodeLayout
+          Size="139,42"
+          Id="Package\Carga\Proveedor\Nivel2\Select Nivel2"
+          TopLeft="173,52" />
+        <EdgeLayout
+          Id="Package\Carga\Proveedor\Nivel2.Paths[OLE DB Source Output]"
+          TopLeft="242.5,94">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="22,64"
+              Start="0,0"
+              End="22,56.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28"
+                    Point2="0,32"
+                    Point3="4,32" />
+                  <mssgle:LineSegment
+                    End="18,32" />
+                  <mssgle:CubicBezierSegment
+                    Point1="18,32"
+                    Point2="22,32"
+                    Point3="22,36" />
+                  <mssgle:LineSegment
+                    End="22,56.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Carga\Proveedor\Nivel2\Insert Nivel2">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Carga\Proveedor\Nivel2\Select Nivel2">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Carga\Proveedor\Nivel3">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="139,42"
+          Id="Package\Carga\Proveedor\Nivel3\Select Nivel3"
+          TopLeft="173,52" />
+        <NodeLayout
+          Size="139,42"
+          Id="Package\Carga\Proveedor\Nivel3\Insert Nivel3"
+          TopLeft="195,158" />
+        <EdgeLayout
+          Id="Package\Carga\Proveedor\Nivel3.Paths[OLE DB Source Output]"
+          TopLeft="242.5,94">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="22,64"
+              Start="0,0"
+              End="22,56.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28"
+                    Point2="0,32"
+                    Point3="4,32" />
+                  <mssgle:LineSegment
+                    End="18,32" />
+                  <mssgle:CubicBezierSegment
+                    Point1="18,32"
+                    Point2="22,32"
+                    Point3="22,36" />
+                  <mssgle:LineSegment
+                    End="22,56.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Carga\Proveedor\Nivel3\Insert Nivel3">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Carga\Proveedor\Nivel3\Select Nivel3">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Carga\Proveedor\Unidad">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="143,42"
+          Id="Package\Carga\Proveedor\Unidad\Select Unidad"
+          TopLeft="231,85" />
+        <NodeLayout
+          Size="143,42"
+          Id="Package\Carga\Proveedor\Unidad\Insert Unidad"
+          TopLeft="232,168" />
+        <EdgeLayout
+          Id="Package\Carga\Proveedor\Unidad.Paths[OLE DB Source Output]"
+          TopLeft="303,127">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,41"
+              Start="0,0"
+              End="0,33.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Carga\Proveedor\Unidad\Insert Unidad">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Carga\Proveedor\Unidad\Select Unidad">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Carga\Proveedor\Vendedor">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="155,42"
+          Id="Package\Carga\Proveedor\Vendedor\Select Vendedor"
+          TopLeft="173,52" />
+        <NodeLayout
+          Size="155,42"
+          Id="Package\Carga\Proveedor\Vendedor\Insert Vendedor"
+          TopLeft="210,185" />
+        <EdgeLayout
+          Id="Package\Carga\Proveedor\Vendedor.Paths[OLE DB Source Output]"
+          TopLeft="250.5,94">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="37,91"
+              Start="0,0"
+              End="37,83.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,41.5"
+                    Point2="0,45.5"
+                    Point3="4,45.5" />
+                  <mssgle:LineSegment
+                    End="33,45.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="33,45.5"
+                    Point2="37,45.5"
+                    Point3="37,49.5" />
+                  <mssgle:LineSegment
+                    End="37,83.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Carga\Proveedor\Vendedor\Insert Vendedor">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Carga\Proveedor\Vendedor\Select Vendedor">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Carga\Proveedor\Zona">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="133,42"
+          Id="Package\Carga\Proveedor\Zona\Insert Zona"
+          TopLeft="172,174" />
+        <NodeLayout
+          Size="134,42"
+          Id="Package\Carga\Proveedor\Zona\Select Zona"
+          TopLeft="173,52" />
+        <EdgeLayout
+          Id="Package\Carga\Proveedor\Zona.Paths[OLE DB Source Output]"
+          TopLeft="239.25,94">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,80"
+              Start="0,0"
+              End="0,72.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,72.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Carga\Proveedor\Zona\Insert Zona">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Carga\Proveedor\Zona\Select Zona">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
