@@ -1,0 +1,8 @@
+
+1.Instalar R.
+2.Instalar R Studio.
+3.Instalar los connponentes necesarios para  usar knitr.
+
+Enviar al correo el documento R Markdown en pdf y el script gnenerado
+
+
