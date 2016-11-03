@@ -1,0 +1,114 @@
+---
+title: "Clase_9_Auto_MPG"
+author: "Efrén Jiménez"
+date: "2 de noviembre de 2016"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+##Análisis del Problema
+El desempeño de un automovil se puede medir de diferentes formas. Algunas comunes son la cantidad de
+caballos de fuerza y el rendimiento del mismo, que se puede resumir en cuántas millas puede recorrer el
+automóvil por cada galón de combustible que consume. Para los clientes, potenciales compradores de un
+automóvil, este rendimiento es importante pues puede ayudar a tomar una decisión con respecto a cuál
+automovil comprar (si, por ejemplo, el cliente quiere un auto que rinda por muchas millas y pueda economizar
+en la compra de combustible).
+Desde este punto de vista, tanto a clientes como a fabricadores de automóviles, les conviene entender cuál es
+la relación entre diferentes características del automóvil y su rendimiento, pues el conocer estas relaciones les
+puede ayudar a inferir cuál va a ser la eficiencia del vehículo a partir de ver los valores de otras características.
+Para fabricantes, puede ser importante conocer estas relaciones para saber cómo hacer cada modelo más
+eficiente con respecto al anterior.
+
+##Entendimiento de los Datos
+
+Con el fin de analizar y tratar de estimar las millas por galón de diferentes modelos de automóviles, se trabajó
+con un conjunto de datos que contiene 398 observaciones y 9 variables:
+. mpg (millas por galón): numérica, con un rango de 9 a 46.60.
+. cyl (cilindraje): categórica ordinal, con valores posibles de 3, 4, 5, 6 y 8.
+. disp (desplazaiento): numérica, con un rango de 68 a 455.
+. hp (caballos de fuerza): numérica, con un rango de 46 a 230 y 6 valores faltantes.
+. weight (peso): numérica, con un rango de 1613 a 5140.
+. acc (aceleración): numérica, con un rango de 8 a 24.80.
+. model year (año): categórica, con 13 valores diferentes representando el año del automóvil.
+. origin (origen): categórica, 3 valores posibles: 1, 2, ó 3.
+. model name (nombre del modelo): categórica, con 305 posibles valores.
+
+
+##Exploración de los Datos
+
+```{r}
+#librerías utilizadas
+library(caTools)
+
+#Establezca el directorio de trabajo
+setwd("D:\\Drive\\Universidad\\UTN\\2016\\III Cuatrimestre\\mineria_2016_III_cuatri\\Clase 9\\AutoMPG")
+
+autos <- read.csv('auto-mpg.txt', header = F, na.strings = '?')
+autos <- data.frame(do.call('rbind', strsplit(as.character(autos$V1),'  ',fixed=TRUE)))
+colnames(autos) <- c('mpg', 'cyl', 'disp', 'hp', 'weight', 'acc', 'model.year',
+'origin', 'model.name')
+
+#cambiar las variables que corresponden a numéricas
+autos$mpg <- as.numeric(as.character(autos$mpg))
+autos$disp <- as.numeric(as.character(autos$disp))
+autos$hp <- as.numeric(as.character(autos$hp))
+
+autos$weight <- as.numeric(as.character(autos$weight))
+autos$acc <- as.numeric(as.character(autos$acc))
+
+#Utilice la función str() para ver la estructura del conjunto de datos:
+str(autos)
+
+#Dividir el conjunto de datos en uno de entrenamiento y otro de pruebas:
+set.seed(1376)
+splt <- sample.split(autos$mpg, SplitRatio = 0.7)
+autos.entrenamiento <- autos[splt, ]
+autos.prueba <- autos[!splt, ]
+
+```
+
+Es importante siempre validar los rangos de los conjuntos de datos creados, para evitar caer en extrapolación:
+
+```{r}
+summary(autos.entrenamiento)
+summary(autos.prueba)
+```
+
+De acuerdo con los resúmenes anteriores, hay algunas observaciones en el conjunto de datos de prueba cuyo
+rango de las variables disp y weight se extiende más allá del rango en el conjunto de datos de entrenamiento,
+así que vamos a eliminar esas observaciones del conjunto de datos de prueba.
+
+```{r}
+autos.prueba <- autos.prueba[autos.prueba$disp >= 70, ]
+summary(autos.entrenamiento)
+summary(autos.prueba)
+```
+
+Para trabajar con regresiones lineales, es importante trabajar sólo con variables cuantitativas y estudiar las
+relaciones que hay entre ellas. Con esto en mente, podemos comenzar nuestra exploración creando gráficos
+de dispersión para ver cuál es la relación entre nuestra variable de interés (mpg) y el resto de las variables
+cuantitativas:
+
+```{r}
+par(mfrow = c(2,2)) #crear una cuadrícula de 2 columnas y 2 hileras para ver cuatro gráficos.
+
+plot(x = autos.entrenamiento$disp, y = autos.entrenamiento$mpg, main = 'Relación entre mpg y disp', ylab = 'mpg', xlab = 'disp')
+plot(x = autos.entrenamiento$hp, y = autos.entrenamiento$mpg, main = 'Relación entre mpg y hp', ylab = 'mpg', xlab = 'hp')
+plot(x = autos.entrenamiento$weight, y = autos.entrenamiento$mpg, main = 'Relación entre mpg y weight', ylab = 'mpg', xlab = 'weight')
+plot(x = autos.entrenamiento$acc, y = autos.entrenamiento$mpg, main = 'Relación entre mpg y acc', ylab = 'mpg', xlab = 'acc')
+
+```
+
+
+##Modelo de Minería de Datos
+
+##Evaluación
+
+##Resultados
+
+
+
