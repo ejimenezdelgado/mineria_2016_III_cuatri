@@ -83,7 +83,7 @@ rango de las variables disp y weight se extiende más allá del rango en el conjun
 así que vamos a eliminar esas observaciones del conjunto de datos de prueba.
 
 ```{r}
-autos.prueba <- autos.prueba[autos.prueba$disp >= 70, ]
+autos.prueba <- autos.prueba[autos.prueba$disp >= 70 & autos.prueba$acc <=24.60, ]
 summary(autos.entrenamiento)
 summary(autos.prueba)
 ```
@@ -102,13 +102,83 @@ plot(x = autos.entrenamiento$weight, y = autos.entrenamiento$mpg, main = 'Relaci
 plot(x = autos.entrenamiento$acc, y = autos.entrenamiento$mpg, main = 'Relación entre mpg y acc', ylab = 'mpg', xlab = 'acc')
 
 ```
+En los gráficos creados anteriormente, podemos ver como sí existe algún tipo de relación, aunque no sea
+exáctamente lineal, entre mpg y las otras cuatro variables cuantitativas. De estas cuatro variables, la que
+parece tener menor relación es la variable acc con la variable mpg.
+También es importante visualizar la relación entre las diferentes variables predictoras, para lo cual podemos
+crear una matriz de gráficos de dispersión:
+
+```{r}
+par(mfrow = c(1,1)) #volver a solo un gráfico por visualización.
+pairs(autos.entrenamiento[!is.na(autos$hp), c(3:6)], main = 'Relación entre predictores')
+```
+
+La información del gráfico anterior podemos complementarla con una matriz de correlación:
+
+```{r}
+cor(autos.entrenamiento[!is.na(autos.entrenamiento$hp),c(3:6)])
+```
 
 
 ##Modelo de Minería de Datos
+Una vez seleccionadas las variables para incluir en el modelo de regresión, se procede a crearlo:
+
+
+```{r}
+#Regresión Simple
+regSimple.mpg <- lm(mpg ~ weight, data = autos.entrenamiento)
+summary(regSimple.mpg)
+```
+
+En el resumen del modelo, podemos ver que ambas variables son significativas y que el modelo creado explica
+alrededor de un 68% de la variación en la variable de respuesta (mpg). Asimismo, podemos ver que el modelo
+es mejor que un modelo sin variables. Con este modelo, procedemos a hacer las predicciones sobre el conjunto
+de datos de prueba.
+
+```{r}
+#Regresión Multiple
+regMultiple.mpg <- lm(mpg ~ weight+hp, data = autos.entrenamiento)
+summary(regMultiple.mpg)
+```
+
+En el resumen del modelo, podemos ver que ambas variables son significativas y que el modelo creado explica
+alrededor de un 70% de la variación en la variable de respuesta (mpg). Asimismo, podemos ver que el modelo
+es mejor que un modelo sin variables. Con este modelo, procedemos a hacer las predicciones sobre el conjunto
+de datos de prueba.
+
+```{r}
+autos.prueba$PrediccionSimple <- predict(regSimple.mpg, newdata = autos.prueba)
+
+autos.prueba$PrediccionMultiple <- predict(regMultiple.mpg, newdata = autos.prueba)
+```
+
 
 ##Evaluación
 
+Para determinar qué tan bueno es el modelo, vamos a calcular dos métricas: primero la raíz cuadrada del
+promedio de los errores cuadrados (RMSE):
+
+```{r}
+sqrt(mean((autos.prueba$mpg - autos.prueba$PrediccionSimple)^2))
+
+sqrt(mean((autos.prueba$mpg - autos.prueba$PrediccionMultiple)^2))
+
+```
+
 ##Resultados
 
+De acuerdo con la evaluación hecha, el modelo inicia con muy buenos números: puede explicar cerca de un 71% de la variación de la variable mpg en el conjunto de datos de prueba, y el error promedio es de alrededor de 3 mpg para arriba o para abajo. Sin embargo, el análisis de los residuos nos deja ver que hay un patrón no aleatorio para valores altos de mpg, específicamente para valores mayores a 30. A partir de este número, los residuos tienden al alza, lo cual indica que el modelo no es igual para diferentes valores de mpg.
+
+En resumen: el modelo no debería ser utilizado, y se deben analizar más a fondo los datos para ver si se puede aplicar alguna transformación a los datos de entrada para volver a intentar crear un modelo, por ejemplo, puede aplicarse el logaritmo a la variable weight para tener una relación más lineal y menos curvilínea:
+
+```{r}
+par(mfrow = c(1,2))
+
+plot(y = autos.prueba$mpg,
+     x = autos.prueba$weight,
+     main = 'Relación entre mpg y weight',
+     xlab = 'weight',
+     ylab = 'mpg')
+```
 
 

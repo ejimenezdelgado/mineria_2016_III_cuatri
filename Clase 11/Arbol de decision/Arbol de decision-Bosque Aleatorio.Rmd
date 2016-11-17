@@ -1,0 +1,159 @@
+---
+title: "Árbol de decisión - Bosque Aleatorio"
+author: "Efrén Jiménez"
+date: "1 de setiembre de 2016"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Análisis del Problema
+
+En diferentes ramas de la ciencia, como la biología por ejemplo, puede resultar muy importante el poder analizar ágilmente conjuntos de datos de diferentes tamaños con el fin de clasificar especies de plantas, bacterias, animales u otros tipos de organismos. En este caso, se va a intentar crear un modelo que clasifique la especie de diferentes flores basándose en características del sépalo y el pétalo.
+
+Las aplicaciones de dicho modelo pueden ser varias y para diferentes audiencias. Por ejemplo en el contexto de un laboratorio, se puede utilizar para concentrar los esfuerzos en la recolección de muestras y dejar el trabajo de clasificación para el algoritmo. De esta manera, se pueden obtener más muestras en un período menor de tiempo, incluso hasta podría haber un ahorro de dinero significativo al reducir la cantidad de horas necesarias para cumplir con una cuota de muestras.
+
+## Entendimiento de los Datos
+
+El conjunto de datos a ser utilizado contiene 150 observaciones, con las siguientes varaibles o columnas:
+
+- Sepal.Length: longitud del sépalo; numérica con valores entre 4.3 y 7.9.
+- Sepal.Width: ancho del sépalo; numérica con valores entre 2 y 4.4.
+- Petal.Length: largo del pétalo; numérica con valores entre 1 y 6.9.
+- Petal.Width: ancho del pétalo; numérica con valores entre 0.1 y 2.5.
+- Species: especie a la cual pertenece cada observación; valores posibles: setosa, versicolor y virginica.
+
+## Exploración de los Datos
+
+El conjunto de datos que se va a analizar contiene 150 observaciones, 50 de cada especie:
+
+```{r}
+#librerías utilizadas
+library(caTools)
+library(rpart)
+library(rpart.plot)
+library(rattle)
+library(randomForest)
+
+#cargar el conjunto de datos
+data("iris")
+
+summary(iris)
+
+#dividir el conjunto de datos en entrenamiento y prueba
+splt <- sample.split(iris$Species, SplitRatio = 0.7)
+entrenamiento <- iris[splt,]
+prueba <- iris[!splt,]
+
+barplot(table(iris$Species),
+        main = 'Distribución de Observaciones por Especie',
+        ylab = 'Observaciones',
+        xlab = 'Especie')
+
+```
+
+Luego de dividir el conjunto de datos en entrenamiento y prueba, se puede ver como la combinación de diferentes pares de variables muestran una clara división entre cada una de las especies:
+
+```{r}
+pairs(entrenamiento[, -5],
+      col = as.numeric(entrenamiento$Species))
+
+```
+
+Por ejemplo, la relación entre las variables del ancho y el largo del pétalo permite ver una división considerablemente clara entre las 3 especies. La división no es tan clara cuando se combinan variables como el largo del sépalo y el largo o el ancho del pétalo, pero esas relaciones son bastante más claras que cuando se combinan el largo del sépalo y el ancho del sépalo.
+
+Si se analizan las variables individualmente, se puede apreciar que cada variable aporta información valiosa para la clasificación, pero las que tienen información relacionada con el pétalo son las que presentan las divisiones más claras.
+
+```{r fig.height = 3.5}
+boxplot(Sepal.Length ~ Species,
+        data = entrenamiento,
+        main = 'Distribución de Largo del Sépalo por Especie',
+        xlab = 'Especie',
+        ylab = 'Largo del Sépalo')
+
+```
+
+
+```{r fig.height = 3.5}
+boxplot(Petal.Length ~ Species,
+        data = entrenamiento,
+        main = 'Distribución de Largo del Pétalo por Especie',
+        xlab = 'Especie',
+        ylab = 'Largo del Pétalo')
+
+```
+
+
+```{r fig.height = 3.5}
+boxplot(Petal.Width ~ Species,
+        data = entrenamiento,
+        main = 'Distribución de Ancho del Pétalo por Especie',
+        xlab = 'Especie',
+        ylab = 'Ancho del Pétalo')
+
+```
+
+La variable que presenta divisiones menos claras es la del ancho del sépalo:
+
+```{r fig.height = 3.5}
+boxplot(Sepal.Width ~ Species,
+        data = entrenamiento,
+        main = 'Distribución de Ancho del Sépalo por Especie',
+        xlab = 'Especie',
+        ylab = 'Ancho del Sépalo')
+
+```
+
+
+## Modelo de Minería de Datos
+
+El primero modelo que se va a utilizar es el de árboles de decisión:
+
+```{r}
+
+modelo.arbol <- rpart(Species ~ .,
+                      data = entrenamiento)
+
+fancyRpartPlot(modelo.arbol)
+
+predicciones.arbol <- predict(modelo.arbol, newdata = prueba, type = 'class')
+
+```
+
+Como se puede apreciar en el gráfico anterior. El modelo determinó que las variables relacionadas con los pétalos son las más importantes para hacer la clasificación.
+
+Alternativamente, se va a crear también un bosque aleatorio:
+
+```{r}
+set.seed(4527)
+modelo.bosque <- randomForest(Species ~ .,
+                              ntrees = 15,
+                              data = entrenamiento)
+
+predicciones.bosque <- predict(modelo.bosque, newdata = prueba, type = 'class')
+
+```
+
+## Evaluación
+
+Debido a que la variable Especie tiene 3 posibles valores, la evaluación de los modelos se va a centrar en la métrica *exactitud*:
+
+```{r}
+table(prueba$Species, predicciones.arbol)
+
+```
+
+El modelo de árbol de decisión clasificó correctamente 43 observaciones de 45, para una exactitud del 95.56%.
+
+```{r}
+table(prueba$Species, predicciones.bosque)
+
+```
+
+El bosque aleatorio clasificó correctamente 44 observaciones de 45, para una exactitud del 97.78%. El único error fue una flor virginica clasificada como versicolor.
+
+## Resultados
+
+En general, ambos modelos presentan muy buen desempeño, con exactitudes por encima del 95%. Sin embargo el bosque aleatorio tiene una exactitud mayor. Se puede concluir que el caso se presta bastante para un modelo de clasificación, el cual podría ser útil en diferentes escenarios.

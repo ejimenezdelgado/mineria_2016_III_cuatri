@@ -1,0 +1,190 @@
+---
+title: 'Regresión lineal múltiple'
+author: "Efrén Antonio Jiménez Delgado"
+date: "1 de setiembre de 2016"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, tidy = TRUE)
+```
+
+## Análisis del Problema
+
+El desempeño de un automovil se puede medir de diferentes formas. Algunas comunes son la cantidad de caballos de fuerza y el rendimiento del mismo, que se puede resumir en cuántas millas puede recorrer el automóvil por cada galón de combustible que consume. Para los clientes, potenciales compradores de un automóvil, este rendimiento es importante pues puede ayudar a tomar una decisión con respecto a cuál automovil comprar (si, por ejemplo, el cliente quiere un auto que rinda por muchas millas y pueda economizar en la compra de combustible).
+
+Desde este punto de vista, tanto a clientes como a fabricadores de automóviles, les conviene entender cuál es la relación entre diferentes características del automóvil y su rendimiento, pues el conocer estas relaciones les puede ayudar a inferir cuál va a ser la eficiencia del vehículo a partir de ver los valores de otras características. Para fabricantes, puede ser importante conocer estas relaciones para saber cómo hacer cada modelo más eficiente con respecto al anterior.
+
+## Entendimiento de los Datos
+
+Con el fin de analizar y tratar de estimar las millas por galón de diferentes modelos de automóviles, se trabajó con un conjunto de datos que contiene 398 observaciones y 9 variables:
+
+- mpg (millas por galón): numérica, con un rango de 9 a 46.60.
+- cyl (cilindraje): categórica ordinal, con valores posibles de 3, 4, 5, 6 y 8.
+- disp (desplazaiento): numérica, con un rango de 68 a 455.
+- hp (caballos de fuerza): numérica, con un rango de 46 a 230 y 6 valores faltantes.
+- weight (peso): numérica, con un rango de 1613 a 5140.
+- acc (aceleración): numérica, con un rango de 8 a 24.80.
+- model year (año): categórica, con 13 valores diferentes representando el año del automóvil.
+- origin (origen): categórica, 3 valores posibles: 1, 2, ó 3.
+- model name (nombre del modelo): categórica, con 305 posibles valores.
+
+## Exploración de los Datos
+
+```{r}
+#librerías utilizadas
+library(caTools)
+
+#establezca el directorio de trabajo
+setwd('D:\\Drive\\Universidad\\UTN\\2016\\III Cuatrimestre\\mineria_2016_III_cuatri\\Clase 11\\Regresion lineal')
+
+#cargue el archivo a una variable que se llame autos usando la función read.table
+autos <- read.csv('auto-mpg.txt', header = F, na.strings = '?')
+autos <- data.frame(do.call('rbind', strsplit(as.character(autos$V1),'   ',fixed=TRUE)))
+
+colnames(autos) <- c('mpg', 'cyl', 'disp', 'hp', 'weight', 'acc', 'model.year', 
+                     'origin', 'model.name')
+
+#cambiar las variables que corresponden a numéricas
+autos$mpg <- as.numeric(as.character(autos$mpg))
+autos$disp <- as.numeric(as.character(autos$disp))
+autos$hp <- as.numeric(as.character(autos$hp))
+autos$weight <- as.numeric(as.character(autos$weight))
+autos$acc <- as.numeric(as.character(autos$acc))
+
+#Utilice la función str() para ver la estructura del conjunto de datos:
+str(autos)
+
+#Dividir el conjunto de datos en uno de entrenamiento y otro de pruebas:
+set.seed(1376)
+splt <- sample.split(autos$mpg, SplitRatio = 0.7)
+autos.entrenamiento <- autos[splt, ]
+autos.prueba <- autos[!splt, ]
+
+```
+
+Es importante siempre validar los rangos de los conjuntos de datos creados, para evitar caer en extrapolación:
+
+```{r}
+summary(autos.entrenamiento)
+
+summary(autos.prueba)
+
+```
+
+De acuerdo con los resúmenes anteriores, hay algunas observaciones en el conjunto de datos de prueba cuyo rango de las variables disp y weight se extiende más allá del rango en el conjunto de datos de entrenamiento, así que vamos a eliminar esas observaciones del conjunto de datos de prueba.
+
+```{r}
+autos.prueba <- autos.prueba[autos.prueba$weight >= 1649 & autos.prueba$disp >= 70, ]
+
+summary(autos.entrenamiento)
+
+summary(autos.prueba)
+
+```
+
+En total, se eliminaron 2 observaciones.
+
+Para trabajar con regresiones lineales, es importante trabajar sólo con variables cuantitativas y estudiar las relaciones que hay entre ellas. Con esto en mente, podemos comenzar nuestra exploración creando gráficos de dispersión para ver cuál es la relación entre nuestra variable de interés (mpg) y el resto de las variables cuantitativas:
+
+```{r}
+par(mfrow = c(2,2)) #crear una cuadrícula de 2 columnas y 2 hileras para ver cuatro gráficos.
+
+plot(x = autos.entrenamiento$disp, y = autos.entrenamiento$mpg, main = 'Relación entre mpg y disp', ylab = 'mpg', xlab = 'disp')
+plot(x = autos.entrenamiento$hp, y = autos.entrenamiento$mpg, main = 'Relación entre mpg y hp', ylab = 'mpg', xlab = 'hp')
+plot(x = autos.entrenamiento$weight, y = autos.entrenamiento$mpg, main = 'Relación entre mpg y weight', ylab = 'mpg', xlab = 'weight')
+plot(x = autos.entrenamiento$acc, y = autos.entrenamiento$mpg, main = 'Relación entre mpg y acc', ylab = 'mpg', xlab = 'acc')
+
+```
+
+En los gráficos creados anteriormente, podemos ver como sí existe algún tipo de relación, aunque no sea exáctamente lineal, entre mpg y las otras cuatro variables cuantitativas. De estas cuatro variables, la que parece tener menor relación es la variable acc con la variable mpg.
+
+También es importante visualizar la relación entre las diferentes variables predictoras, para lo cual podemos crear una matriz de gráficos de dispersión:
+
+```{r}
+par(mfrow = c(1,1)) #volver a solo un gráfico por visualización.
+
+pairs(autos.entrenamiento[!is.na(autos$hp), c(3:6)], main = 'Relación entre predictores')
+
+```
+
+La información del gráfico anterior podemos complementarla con una matriz de correlación:
+
+```{r}
+
+cor(autos.entrenamiento[!is.na(autos.entrenamiento$hp),c(3:6)])
+
+```
+
+Como pudimos apreciar en la matriz de gráficos de dispersión, y confirmar con la matriz de correlación, hay una correlación significativa entre las variables hp y disp, disp y weight y hp y weight. La única variable que no tiene una correlación absoluta mayor a 0.75 es acc. Dado esto, debemos escoger una variable entre hp, disp y weight, para lo cual podemos crear una matriz de correlación entre esas tres variables y mpg para ver cuál tiene una correlación mayor con mpg:
+
+```{r}
+
+cor(autos.entrenamiento[!is.na(autos.entrenamiento$hp),c(1, 3:5)])
+
+```
+
+Basándonos en la correlación absoluta, se va a escoger la variable weight para ser incluida en el modelo.
+
+## Modelo de Minería de Datos
+
+Una vez seleccionadas las variables para incluir en el modelo de regresión, se procede a crearlo:
+
+```{r}
+
+reg.mpg <- lm(mpg ~ weight + acc, data = autos.entrenamiento)
+
+summary(reg.mpg)
+
+```
+
+En el resumen del modelo, podemos ver que ambas variables son significativas y que el modelo creado explica alrededor de un 69% de la variación en la variable de respuesta (mpg). Asimismo, podemos ver que el modelo es mejor que un modelo sin variables. Con este modelo, procedemos a hacer las predicciones sobre el conjunto de datos de prueba.
+
+```{r}
+autos.prueba$Prediccion <- predict(reg.mpg, newdata = autos.prueba)
+
+
+```
+
+## Evaluación
+
+Para determinar qué tan bueno es el modelo, vamos a calcular dos métricas: primero la raíz cuadrada del promedio de los errores cuadrados (RMSE):
+
+```{r}
+sqrt(mean((autos.prueba$mpg - autos.prueba$Prediccion)^2))
+
+```
+
+También es necesario calcular el r cuadrado:
+
+```{r}
+
+Suma.Total.Cuadrados <- sum((mean(autos.entrenamiento$mpg) - autos.prueba$mpg)^2) #error total si usamos modelo ingenuo en prueba
+Suma.Errores.Cuadrados <- sum((autos.prueba$Prediccion - autos.prueba$mpg)^2) #error total de nuestro modelo en prueba
+1 - (Suma.Errores.Cuadrados / Suma.Total.Cuadrados)  
+
+```
+
+Finalmente, procedemos a analizar la distribución de los residuos:
+
+```{r}
+
+hist(autos.prueba$mpg - autos.prueba$Prediccion, 
+     breaks = 50,
+     main = 'Distribución de los Residuos en Prueba',
+     xlab = 'residuos')
+
+plot(y = autos.prueba$mpg - autos.prueba$Prediccion,
+     x = autos.prueba$mpg,
+     main = 'Distribución de los residuos por mpg',
+     xlab = 'mpg',
+     ylab = 'residuos')
+
+```
+
+
+## Resultados
+
+De acuerdo con la evaluación hecha, el modelo inicia con muy buenos números: puede explicar cerca de un 71% de la variación de la variable mpg en el conjunto de datos de prueba, y el error promedio es de alrededor de 3 mpg para arriba o para abajo. Sin embargo, el análisis de los residuos nos deja ver que hay un patrón no aleatorio para valores altos de mpg, específicamente para valores mayores a 30. A partir de este número, los residuos tienden al alza, lo cual indica que el modelo no es igual para diferentes valores de mpg.
+
+En resumen: el modelo no debería ser utilizado, y se deben analizar más a fondo los datos para ver si se puede aplicar alguna transformación a los datos de entrada para volver a intentar crear un modelo
