@@ -1,0 +1,10 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="BI_SA"
+  DTS:DTSID="{4956887C-E672-45F0-8E25-7BD1182E4065}"
+  DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectionString="Data Source=EFREN\BI;Initial Catalog=BI_SA;Integrated Security=True;Application Name=SSIS-IntegrationBI-{4956887C-E672-45F0-8E25-7BD1182E4065}EFREN\BI.BI_SA;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

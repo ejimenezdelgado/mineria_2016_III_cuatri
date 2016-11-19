@@ -1,0 +1,89 @@
+﻿<DeploymentSnapshot xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0">
+  <Target>
+    <Database>MultidimensionalBI</Database>
+    <Server>localhost</Server>
+    <ConnectionString>DataSource=localhost;Timeout=0</ConnectionString>
+  </Target>
+  <Options>
+    <TransactionalDeployment>false</TransactionalDeployment>
+    <PartitionDeployment>DeployPartitions</PartitionDeployment>
+    <RoleDeployment>DeployRolesRetainMembers</RoleDeployment>
+    <ProcessingOption>DoNotProcess</ProcessingOption>
+    <OutputScript></OutputScript>
+    <ImpactAnalysisFile></ImpactAnalysisFile>
+    <ConfigurationSettingsDeployment>Deploy</ConfigurationSettingsDeployment>
+    <OptimizationSettingsDeployment>Deploy</OptimizationSettingsDeployment>
+    <WriteBackTableCreation>UseExisting</WriteBackTableCreation>
+  </Options>
+  <Snapshot>
+    <ObjectSnapshots>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.RelationalDataSource</Type>
+        <TimeStamp>G59J5/thuqkGUzku3Ggwdqk7dls=27/10/2016 10:52:0527/10/2016 10:23:25</TimeStamp>
+        <ID>
+          <String>BI DW</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.DataSourceView</Type>
+        <TimeStamp>voMiI3LD3h4JT9FMP8WTOHZYA9k=27/10/2016 10:24:2027/10/2016 10:24:19</TimeStamp>
+        <ID>
+          <String>BI DW</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>u7R3YE4aFwchp9orIWv1MDmEI6Y=27/10/2016 10:25:5427/10/2016 10:25:53</TimeStamp>
+        <ID>
+          <String>TD Sucursal</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>newfcVOufWYciNpcmpmdqt2O00M=27/10/2016 2:19:4727/10/2016 10:25:53</TimeStamp>
+        <ID>
+          <String>TD Cliente</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>kmgv9Vuofvc7M8ZXKaIJVijVrjg=27/10/2016 11:14:5727/10/2016 10:25:53</TimeStamp>
+        <ID>
+          <String>TD Tiempo</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>QEhc1S+lUu20NKPd+tAoaCY2bEs=27/10/2016 12:28:4527/10/2016 10:25:53</TimeStamp>
+        <ID>
+          <String>TD Articulo</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>9LYwU8DvEoCjB8U4TAdsfDm97KI=27/10/2016 10:25:5427/10/2016 10:25:53</TimeStamp>
+        <ID>
+          <String>TD Tipo Documento</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Cube</Type>
+        <TimeStamp>wVPGWquRbZfdVz7OeBGXJ7tHV9o=27/10/2016 2:19:4727/10/2016 10:25:53ewGJvv8qIjR3LTT8zWNsPJEoD6Y=27/10/2016 10:25:5427/10/2016 10:25:53</TimeStamp>
+        <ID>
+          <String>BI DW</String>
+        </ID>
+      </ObjectSnapshot>
+    </ObjectSnapshots>
+    <DatabaseSnapshot>
+      <Type>Microsoft.AnalysisServices.Database</Type>
+      <TimeStamp>kPgizFYZGvWh//0SDBXK5hYCC68=27/10/2016 10:21:2427/10/2016 10:21:23</TimeStamp>
+      <ID>
+        <String>MultidimensionalBI</String>
+      </ID>
+    </DatabaseSnapshot>
+    <Granularity>Coarse</Granularity>
+  </Snapshot>
+  <AssemblyLocations />
+  <ProcessingComplete>true</ProcessingComplete>
+  <LastDeployed>2016-10-27T20:19:58.193333Z</LastDeployed>
+</DeploymentSnapshot>

@@ -1,0 +1,3 @@
+ SELECT NON EMPTY { [Measures].[Ventas Cantidad], [Measures].[Ventas Excento Local], [Measures].[Ventas Gravado Local] } ON COLUMNS,
+  NON EMPTY { ([TD Cliente].[Cliente Nombre].[Cliente Nombre].ALLMEMBERS * [TD Articulo].[Articulo Nombre].[Articulo Nombre].ALLMEMBERS * [TD Tiempo].[Ano].[Ano].ALLMEMBERS * [TD Tiempo].[Mes].[Mes].ALLMEMBERS ) } 
+  DIMENSION PROPERTIES MEMBER_CAPTION, MEMBER_UNIQUE_NAME ON ROWS FROM [Ventas] CELL PROPERTIES VALUE, BACK_COLOR, FORE_COLOR, FORMATTED_VALUE, FORMAT_STRING, FONT_NAME, FONT_SIZE, FONT_FLAGS
